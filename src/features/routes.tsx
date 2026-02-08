@@ -14,6 +14,8 @@ function SuspenseOutlet() {
 import MainLayout from '@/layouts/main-layout';
 import { usePathname } from './auth/hooks/use-pathname';
 
+import { EXP_ExpenseRoutes } from './Expenses/MyExpenses/routes';
+
 export const moduleRoutes: RouteObject[] = [
   {
     path: '/',
@@ -26,12 +28,8 @@ export const moduleRoutes: RouteObject[] = [
       {
         path: 'expenses',
         element: <SuspenseOutlet />,
-        // children: [EXP_ExpenseRoutes]
         children: [
-          {
-            index: true,
-            element: <div>Expenses Home</div>,
-          },
+          EXP_ExpenseRoutes
         ],
       },
       {

@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/features/auth/context/jwt';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -25,11 +26,13 @@ function App({ children }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster position="top-right" />
-      <AuthProvider>
-        <RouterProvider router={router} />
-        {children}
-      </AuthProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Toaster position="top-right" />
+        <AuthProvider>
+          <RouterProvider router={router} />
+          {children}
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

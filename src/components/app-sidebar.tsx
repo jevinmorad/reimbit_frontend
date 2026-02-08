@@ -52,10 +52,10 @@ export const data = {
     },
     {
       title: "My Expenses",
-      url: "#",
+      url: "/expenses/my-expenses",
       icon: Receipt,
       items: [
-        { title: "Expense List", url: "#" },
+        { title: "Expense List", url: "/expenses/my-expenses" },
         { title: "New Expense", url: "#" },
         { title: "Rejected Expenses", url: "#" },
         { title: "Expense History", url: "#" },

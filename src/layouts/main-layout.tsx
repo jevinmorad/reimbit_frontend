@@ -1,6 +1,7 @@
 import { AppSidebar, data } from '@/components/app-sidebar';
 import { DynamicBreadcrumbs } from '@/components/dynamic-breadcrumbs';
 import { NavUser } from '@/components/nav-user';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Outlet } from 'react-router-dom';
@@ -16,7 +17,8 @@ export default function MainLayout() {
                         <Separator orientation="vertical" className="mr-2 h-4" />
                         <DynamicBreadcrumbs />
                     </div>
-                    <div>
+                    <div className="flex items-center gap-2">
+                        <ThemeToggle />
                         <NavUser user={data.user} />
                     </div>
                 </header>

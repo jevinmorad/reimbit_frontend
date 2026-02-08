@@ -1,4 +1,4 @@
-import { EntityId } from "@/hooks/userListView";
+import type { EntityId } from "@/hooks/userListView";
 import z from "zod";
 
 export const EXP_ExpenseSelectPageRequest = z.object({
