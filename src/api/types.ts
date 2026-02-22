@@ -98,6 +98,14 @@ export interface PostModel<TFilter = unknown> {
 }
 
 /**
+ * Options response for dropdowns
+ */
+export type OptionsResponse = {
+    Value: string;
+    Label: string;
+}
+
+/**
  * Result type for safe methods that return errors as values
  * Discriminated union: either success or error (never both)
  */

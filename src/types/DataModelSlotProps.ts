@@ -1,4 +1,4 @@
-import { EntityId } from "@/hooks/userListView";
+import type { EntityId } from "@/hooks/userListView";
 
 export type DataModalSlotProps = {
   selectedRow?: EntityId | null;

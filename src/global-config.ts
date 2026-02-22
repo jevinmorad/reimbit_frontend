@@ -60,7 +60,7 @@ export const CONFIG: ConfigValue = {
    * @method jwt
    */
   auth: {
-    redirectPath: "/dashboard",
+    redirectPath: "/Account/login",
   },
   DateTimePatterns: {
     DateTime: "DD MMM YYYY h:mm A", // 17 Apr 2022 12:00 am

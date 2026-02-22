@@ -1,5 +1,6 @@
+import { DashboardContent } from "@/components/dashboard-content"
+import { GlobalConfirmDialog } from "@/components/global-confirm-dialog"
 import { Button } from "@/components/ui/button"
-import { ConfirmDialog } from "@/components/ui/confirm-dialog"
 import { DataTable } from "@/components/ui/data-table"
 import { useApiErrorHandler } from "@/features/auth/hooks/useApiErrorHandler"
 import useListView, { type EntityId } from "@/hooks/userListView"
@@ -33,15 +34,13 @@ const EXP_ExpenseListPage = () => {
 
     const { postModel, handlePagination, handleSorting } = useEXP_ExpenseStore()
 
-    // Provide a namespace for the error handler
     const { handleSuccess, handleError } = useApiErrorHandler({
         namespace: "Expense",
         showToast: true,
     })
 
-    const { data: expenses, totalRecords, isLoading } = useSelectPageQuery(postModel, true)
+    const { data, totalRecords, isLoading } = useSelectPageQuery(postModel, true)
 
-    // Pass the handlers to the mutation hook
     const deleteMutation = useDeleteEXP_Expense(handleSuccess, handleError)
 
     const [confirmOpen, setConfirmOpen] = React.useState(false)
@@ -68,45 +67,45 @@ const EXP_ExpenseListPage = () => {
 
     const columns = useMemo<ColumnDef<EXP_ExpenseSelectPageResponse>[]>(() => [
         {
-            accessorKey: "created",
+            accessorKey: "Created",
             header: "Created",
-            cell: ({ row }) => formatDate(row.getValue("created"))
+            cell: ({ row }) => formatDate(row.getValue("Created"))
         },
         {
-            accessorKey: "title",
+            accessorKey: "Title",
             header: "Title",
             cell: ({ row }) => (
                 <span
                     className="cursor-pointer text-primary hover:underline"
-                    onClick={() => showDetailView(row.original.expenseId)}
+                    onClick={() => showDetailView(row.original.ExpenseId)}
                 >
-                    {row.getValue("title")}
+                    {row.getValue("Title")}
                 </span>
             )
         },
         {
-            accessorKey: "categoryName",
+            accessorKey: "CategoryName",
             header: "Category",
         },
         {
-            accessorKey: "amount",
+            accessorKey: "Amount",
             header: "Amount",
-            cell: ({ row }) => formatCurrency(row.getValue("amount"), row.original.currency)
+            cell: ({ row }) => formatCurrency(row.getValue("Amount"), row.original.Currency)
         },
         {
-            accessorKey: "status",
+            accessorKey: "Status",
             header: "Status",
         },
         {
             id: "actions",
             header: "Actions",
             cell: ({ row }) => (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                     <Button
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-primary"
-                        onClick={() => showDetailView(row.original.expenseId)}
+                        onClick={() => showDetailView(row.original.ExpenseId)}
                         title="View"
                     >
                         <Eye className="h-4 w-4" />
@@ -115,7 +114,7 @@ const EXP_ExpenseListPage = () => {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-primary"
-                        onClick={() => showEditView(row.original.expenseId)}
+                        onClick={() => showEditView(row.original.ExpenseId)}
                         title="Edit"
                     >
                         <Edit className="h-4 w-4" />
@@ -124,35 +123,28 @@ const EXP_ExpenseListPage = () => {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-destructive"
-                        onClick={() => handleDelete(row.original.expenseId)}
+                        onClick={() => handleDelete(row.original.ExpenseId)}
                         title="Delete"
                     >
                         <Trash2 className="h-4 w-4" />
                     </Button>
                 </div>
-            )
-        }
+            ),
+        },
     ], [showDetailView, showEditView]);
 
     return (
-        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+        <DashboardContent>
             <DataTable
-                data={expenses}
+                data={data}
                 columns={columns}
                 loading={isLoading}
                 onFilter={() => setOpenFilter(true)}
                 rowCount={totalRecords}
-                pagination={{
-                    pageIndex: postModel.pageOffset,
-                    pageSize: postModel.pageSize,
-                }}
+                postModel={postModel}
                 onPaginationChange={handlePagination}
-                sorting={[{ id: postModel.sortField || 'created', desc: postModel.sortOrder === 'desc' }]}
                 onSortingChange={handleSorting}
                 onInsert={showAddView}
-                onEdit={(row) => showEditView(row.expenseId)}
-                onDelete={(row) => handleDelete(row.expenseId)}
-                onView={(row) => showDetailView(row.expenseId)}
             />
 
             <EXP_ExpenseAddEditPage
@@ -172,7 +164,7 @@ const EXP_ExpenseListPage = () => {
                 setOpenFilter={setOpenFilter}
             />
 
-            <ConfirmDialog
+            <GlobalConfirmDialog
                 isOpen={confirmOpen}
                 onClose={() => setConfirmOpen(false)}
                 onConfirm={confirmDelete}
@@ -181,8 +173,7 @@ const EXP_ExpenseListPage = () => {
                 variant="destructive"
                 confirmText="Delete"
             />
-
-        </div>
+        </DashboardContent>
     )
 }
 

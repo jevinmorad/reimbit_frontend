@@ -9,7 +9,7 @@ export interface PaginationModel {
    * The zero-based index of the current page.
    * @default 0
    */
-  page: number;
+  pageOffset: number;
 }
 export interface PaginationMeta {
   hasNextPage?: boolean;

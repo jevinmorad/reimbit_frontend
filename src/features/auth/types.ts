@@ -1,7 +1,12 @@
 import type GlobalPermissions from './GlobalPermissions';
 import type GlobalPagePermissions from './PagePermissions';
 
-export type UserType = Record<string, unknown> | null;
+export type UserType = {
+  UserId: string;
+  OrganizationId: string;
+  Email: string;
+  RoleId: string;
+} | null;
 
 export type AuthState = {
   User: UserType;

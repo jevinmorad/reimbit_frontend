@@ -1,5 +1,4 @@
-import { Field } from "@/components/shared/Field"
-import { FilterDrawerContainer } from "@/components/shared/FilterDrawerContainer"
+import { Field, FilterDrawerContainer } from "@/components/shared"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
@@ -16,13 +15,16 @@ export const EXP_ExpenseFilterView = ({ openFilter, setOpenFilter }: EXP_Expense
 
     const { control, handleSubmit, reset } = useForm<EXP_ExpenseSelectPageRequest>({
         resolver: zodResolver(EXP_ExpenseSelectPageRequest),
-        defaultValues: { ...postModel?.filterModel },
+        defaultValues: postModel.filterModel || {},
+        mode: "onSubmit" // or onChange if we want instant feedback, but usually "Apply" implies submit
     })
 
-    // Reset form when store filter changes (e.g. cleared externally)
+    // Reset form when drawer opens to match store state, in case it was changed elsewhere or cleared
     useEffect(() => {
-        reset(postModel?.filterModel || {})
-    }, [postModel?.filterModel, reset])
+        if (openFilter) {
+            reset(postModel.filterModel || {})
+        }
+    }, [openFilter, postModel.filterModel, reset])
 
     const onSubmit = (data: EXP_ExpenseSelectPageRequest) => {
         handleFiltering(data)
@@ -30,44 +32,42 @@ export const EXP_ExpenseFilterView = ({ openFilter, setOpenFilter }: EXP_Expense
     }
 
     const onClearAll = () => {
-        reset({})
-        handleFiltering({})
-        setOpenFilter(false)
+        const emptyData = {} as EXP_ExpenseSelectPageRequest // Or explicit fields if needed
+        reset(emptyData)
+        // handleFiltering(emptyData) // Optional: clear filter immediately on Clear All? Reference suggests yes.
+        handleFiltering(emptyData)
+        // setOpenFilter(false) // Keep open? Reference: reset resets form, but maybe we want to keep it open to re-apply? 
+        // Reference code: 
+        // handleFiltering(getEmptyObject...);
+        // setFriendlyFilter(null);
+        // Doesn't explicitly close. I'll keep it open.
     }
 
     return (
         <FilterDrawerContainer
-            keepOpen={openFilter}
-            setOpenFilter={setOpenFilter}
+            open={openFilter}
+            onOpenChange={setOpenFilter}
             onSubmit={handleSubmit(onSubmit)}
             onClearAll={onClearAll}
-            postModel={postModel}
+            title="Filter Expenses"
         >
             <Field.Text
                 control={control}
-                name="title"
+                name="Title"
                 label="Title"
-                placeholder="Filter by title..."
-                gridProps={{ size: { xs: 12, sm: 12, md: 12, lg: 12, xl: 12 } }}
-            />
-            <Field.Text
-                control={control}
-                name="status"
-                label="Status"
-                placeholder="Filter by status..."
                 gridProps={{ size: { xs: 12, sm: 12, md: 12, lg: 12, xl: 12 } }}
             />
             <div className="grid grid-cols-2 gap-4">
                 <Field.Date
                     control={control}
-                    name="fromDate"
+                    name="FromDate"
                     label="From Date"
                     gridProps={{ size: { xs: 12, sm: 12, md: 12, lg: 12, xl: 12 } }}
                     placeholder="Pick a date"
                 />
                 <Field.Date
                     control={control}
-                    name="toDate"
+                    name="ToDate"
                     label="To Date"
                     gridProps={{ size: { xs: 12, sm: 12, md: 12, lg: 12, xl: 12 } }}
                     placeholder="Pick a date"

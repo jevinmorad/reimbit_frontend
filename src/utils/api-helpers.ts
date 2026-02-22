@@ -1,4 +1,4 @@
-import { ApiError } from "@/api/types";
+import type { ApiError } from "@/api/types";
 
 export const hasValidationErrors = (error: ApiError | unknown): boolean => {
     if (!error || typeof error !== 'object') return false;

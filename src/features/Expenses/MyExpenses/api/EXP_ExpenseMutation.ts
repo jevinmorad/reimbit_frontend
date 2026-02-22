@@ -18,7 +18,7 @@ export const useCreateEXP_Expense = (
   const { postModel } = useEXP_ExpenseStore();
   return useMutation<OperationResponse, ApiError, EXP_ExpenseAddEditRequest>({
     mutationFn: async (formData: EXP_ExpenseAddEditRequest) =>
-      api.post<OperationResponse>(EXP_ExpenseEndpoints.insert, formData),
+      api.post<OperationResponse>(EXP_ExpenseEndpoints.Insert, formData),
     onError: error => {
       handleError(error);
     },
@@ -42,7 +42,7 @@ export const useUpdateEXP_Expense = (
   const { postModel } = useEXP_ExpenseStore();
   return useMutation<OperationResponse, ApiError, EXP_ExpenseAddEditRequest>({
     mutationFn: async (formData: EXP_ExpenseAddEditRequest) =>
-      api.put<OperationResponse>(EXP_ExpenseEndpoints.update, formData),
+      api.put<OperationResponse>(EXP_ExpenseEndpoints.Update, formData),
     onError: error => {
       handleError(error);
     },
@@ -53,9 +53,9 @@ export const useUpdateEXP_Expense = (
       queryClient.invalidateQueries({
         queryKey: EXP_ExpenseQueries.selectPage(postModel).queryKey,
       });
-      if (variables.expenseId) {
+      if (variables.ExpenseId) {
         queryClient.invalidateQueries({
-          queryKey: EXP_ExpenseQueries.selectPK(variables.expenseId).queryKey,
+          queryKey: EXP_ExpenseQueries.selectPK(variables.ExpenseId).queryKey,
         });
       }
     },
@@ -70,7 +70,7 @@ export const useDeleteEXP_Expense = (
   const { postModel } = useEXP_ExpenseStore();
   return useMutation<OperationResponse, ApiError, EntityId>({
     mutationFn: async (expenseId: EntityId) =>
-      api.delete<OperationResponse>(EXP_ExpenseEndpoints.delete(expenseId)),
+      api.delete<OperationResponse>(EXP_ExpenseEndpoints.Delete(expenseId)),
     onError: error => {
       handleError(error);
     },

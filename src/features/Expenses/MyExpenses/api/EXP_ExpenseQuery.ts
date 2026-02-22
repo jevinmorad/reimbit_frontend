@@ -1,8 +1,8 @@
 import { api } from "@/api/client";
-import { EntityId } from "@/hooks/userListView";
-import { PostModel } from "@/types/api";
+import type { EntityId } from "@/hooks/userListView";
+import type { PostModel } from "@/types/api";
 import { createQueryKeys } from '@lukemorales/query-key-factory';
-import { EXP_ExpenseAddEditRequest, EXP_ExpenseSelectPageRequest, EXP_ExpenseSelectPageResponse, EXP_ExpenseSelectViewResponse } from "../types";
+import type { EXP_ExpenseAddEditRequest, EXP_ExpenseSelectPageRequest, EXP_ExpenseSelectPageResponse, EXP_ExpenseSelectViewResponse } from "../types";
 import { EXP_ExpenseEndpoints } from "./EXP_ExpenseEndpoints";
 
 export const EXP_ExpenseQueries = createQueryKeys('EXP_Expense', {
@@ -10,7 +10,7 @@ export const EXP_ExpenseQueries = createQueryKeys('EXP_Expense', {
     queryKey: [postModel],
     queryFn: () =>
       api.filter<EXP_ExpenseSelectPageResponse, EXP_ExpenseSelectPageRequest>(
-        EXP_ExpenseEndpoints.selectPage,
+        EXP_ExpenseEndpoints.SelectPage,
         postModel
       ),
   }),
@@ -18,12 +18,12 @@ export const EXP_ExpenseQueries = createQueryKeys('EXP_Expense', {
   selectPK: (expenseId: EntityId) => ({
     queryKey: [expenseId],
     queryFn: () =>
-      api.get<EXP_ExpenseAddEditRequest>(EXP_ExpenseEndpoints.selectPk(expenseId)),
+      api.get<EXP_ExpenseAddEditRequest>(EXP_ExpenseEndpoints.SelectPk(expenseId)),
   }),
 
   selectView: (expenseId: EntityId) => ({
     queryKey: [expenseId],
     queryFn: () =>
-      api.get<EXP_ExpenseSelectViewResponse>(EXP_ExpenseEndpoints.selectView!(expenseId)),
+      api.get<EXP_ExpenseSelectViewResponse>(EXP_ExpenseEndpoints.SelectView!(expenseId)),
   }),
 });

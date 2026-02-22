@@ -1,5 +1,5 @@
 import { DataModal } from "@/components/shared";
-import { DataModalSlotProps } from "@/types/DataModelSlotProps";
+import type { DataModalSlotProps } from "@/types/DataModelSlotProps";
 import { useSelectPKQuery } from "../api/EXP_ExpenseHooks";
 import { EXP_ExpenseAddEditView } from "../view";
 
@@ -13,7 +13,7 @@ const EXP_ExpenseAddEditPage = (props: DataModalSlotProps) => {
     return (
         <DataModal
             Component={EXP_ExpenseAddEditView}
-            modalTitle={data?.expenseId ? "Add Expense" : "Edit Expense"}
+            modalTitle={data?.ExpenseId ? "Add Expense" : "Edit Expense"}
             data={data}
             open={showModal}
             mode={"edit"}

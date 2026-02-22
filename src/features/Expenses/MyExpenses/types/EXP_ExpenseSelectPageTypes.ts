@@ -2,23 +2,23 @@ import type { EntityId } from "@/hooks/userListView";
 import z from "zod";
 
 export const EXP_ExpenseSelectPageRequest = z.object({
-    userId: z.string().nullish(),
-    title: z.string().nullish(),
-    status: z.string().nullish(),
-    categoryId: z.string().nullish(),
-    fromDate: z.string().nullish(),
-    toDate: z.string().nullish(),
+    UserId: z.string().nullish(),
+    Title: z.string().nullish(),
+    Status: z.string().nullish(),
+    CategoryId: z.string().nullish(),
+    FromDate: z.string().nullish(),
+    ToDate: z.string().nullish(),
 })
 
 export type EXP_ExpenseSelectPageRequest = z.infer<typeof EXP_ExpenseSelectPageRequest>;
 
 export type EXP_ExpenseSelectPageResponse = {
-    expenseId: EntityId;
-    created: string;
-    title: string;
-    categoryId: EntityId;
-    categoryName: string;
-    amount: number;
-    currency: string;
-    status: string;
+    ExpenseId: EntityId;
+    Created: string;
+    Title: string;
+    CategoryId: EntityId;
+    CategoryName: string;
+    Amount: number;
+    Currency: string;
+    Status: string;
 }

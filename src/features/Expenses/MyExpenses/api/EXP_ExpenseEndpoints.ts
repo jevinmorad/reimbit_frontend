@@ -1,10 +1,10 @@
-import { EntityId } from "@/hooks/userListView";
+import type { EntityId } from "@/hooks/userListView";
 
 export const EXP_ExpenseEndpoints = {
-    selectPage: `/api/expense/selectPage`,
-    insert: `/api/expense/insert`,
-    update: `/api/expense/update`,
-    delete: (expenseId: EntityId) => `/api/expense/delete/${expenseId}`,
-    selectPk: (expenseId: EntityId) => `/api/expense/${expenseId}`,
-    selectView: (expenseId: EntityId) => `/api/expense/selectView/${expenseId}`,
+    SelectPage: `/api/Expense/SelectPage`,
+    Insert: `/api/Expense/Insert`,
+    Update: `/api/Expense/Update`,
+    Delete: (expenseId: EntityId) => `/api/Expense/Delete/${expenseId}`,
+    SelectPk: (expenseId: EntityId) => `/api/Expense/${expenseId}`,
+    SelectView: (expenseId: EntityId) => `/api/Expense/View/${expenseId}`,
 }

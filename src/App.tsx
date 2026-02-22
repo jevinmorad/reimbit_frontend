@@ -15,9 +15,10 @@ function App({ children }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        refetchOnMount: true,
+        refetchOnMount: false,
         refetchOnWindowFocus: false,
         retry: false,
+        staleTime: 5 * 60 * 1000,
       },
     },
   });

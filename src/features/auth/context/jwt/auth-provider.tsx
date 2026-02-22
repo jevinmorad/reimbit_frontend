@@ -6,7 +6,7 @@ import type GlobalPermissions from '../../GlobalPermissions';
 import type GlobalPagePermissions from '../../PagePermissions';
 import { type AuthState } from '../../types';
 import { AuthContext } from '../auth-context';
-import { isValidToken, setSession } from './utils';
+import { getStoredAccessToken, isValidToken, setSession } from './utils';
 
 api.setBaseURL(CONFIG.apiBaseUrl);
 
@@ -41,8 +41,15 @@ export function AuthProvider({ children }: Props) {
     GlobalPagePermissions: DefaultPagesPermissions,
   });
 
+  type AuthUser = {
+    UserId: string;
+    OrganizationId: string;
+    Email: string;
+    RoleId: string;
+  };
+
   type AuthInfoResponse = {
-    user: any;
+    User: AuthUser;
     permissions: GlobalPermissions;
   };
 
@@ -50,7 +57,7 @@ export function AuthProvider({ children }: Props) {
     try {
       const authData = await api.get<AuthInfoResponse>(endpoints.auth.info);
 
-      const user = authData?.user;
+      const user = authData?.User;
       const userPermissions =
         authData?.permissions != null ? authData?.permissions : DefaultPermissions;
 
@@ -65,28 +72,49 @@ export function AuthProvider({ children }: Props) {
   }, [setState]);
 
   const bootstrap = useCallback(async () => {
-    const accessToken = api.getAuthToken();
+    try {
+      // Step 1: Check if accessToken exists in memory (API client)
+      let accessToken = api.getAuthToken();
 
-    if (accessToken && isValidToken(accessToken)) {
-      await setSession(accessToken);
-    }
+      // Step 2: If not in memory, check localStorage
+      if (!accessToken) {
+        accessToken = getStoredAccessToken();
+        if (accessToken) {
+          // Restore to API client from localStorage
+          api.setAuthToken(accessToken);
+        }
+      }
 
-    if (!accessToken) {
+      // Step 3: Validate the token if it exists
+      if (accessToken && isValidToken(accessToken)) {
+        // Token is valid, set up session and fetch user data
+        await setSession(accessToken);
+        await checkUserSession();
+        return;
+      }
+
+      // Step 4: No valid accessToken, try to refresh using HttpOnly cookie
       try {
         const response = await api.post<{ [key: string]: string }>(endpoints.auth.refreshToken, {});
         const newAccessToken = response[JWT_ACCESS_KEY];
+
         if (newAccessToken) {
           await setSession(newAccessToken);
           await checkUserSession();
           return;
         }
       } catch (error) {
+        // Refresh token failed or expired
         setState({ User: null, loading: false });
         return;
       }
-    }
 
-    await checkUserSession();
+      // Step 5: If we reach here, no valid tokens exist
+      setState({ User: null, loading: false });
+    } catch (error) {
+      console.error('Bootstrap error:', error);
+      setState({ User: null, loading: false });
+    }
   }, [checkUserSession, setState]);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { DataModal } from "@/components/shared";
-import { DataModalSlotProps } from "@/types/DataModelSlotProps";
+import type { DataModalSlotProps } from "@/types/DataModelSlotProps";
 import { useSelectViewQuery } from "../api/EXP_ExpenseHooks";
 import { EXP_ExpenseDetailView } from "../view/EXP_ExpenseDetailView";
 
@@ -17,7 +17,7 @@ const EXP_ExpenseViewPage = ({ selectedRow, showModal, onClose }: DataModalSlotP
             mode="view"
             isLoading={isLoading}
             handleClose={onClose}
-            modalTitle={data?.title ? data.title : "View Expense"}
+            modalTitle={data?.Title ? data.Title : "View Expense"}
             open={showModal}
             maxWidth="md"
         />

@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from './hooks/use-auth-context';
 
+import LoadingPage from '@/components/loading-page';
+
 type AuthGuardProps = {
   children: React.ReactNode;
 };
@@ -17,7 +19,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     }
   }, [loading, authenticated, navigate]);
 
-  if (loading) return null;
+  if (loading) return <LoadingPage />;
 
   return <>{children}</>;
 }

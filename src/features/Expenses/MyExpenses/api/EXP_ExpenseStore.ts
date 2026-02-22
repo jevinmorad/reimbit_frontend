@@ -1,7 +1,6 @@
+import type { PostModel } from "@/api/types";
 import { CONFIG } from "@/global-config";
-import { PostModel } from "@/types/api";
-import { PaginationModel } from "@/types/api/PaginationProps";
-import { SortModel } from "@/types/api/SortModel";
+import type { PaginationModel, SortModel } from "@/types/api";
 import { calculateFilterCount } from "@/utils/calculateFilterCounts";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -37,7 +36,7 @@ export const useEXP_ExpenseStore = create<State & Action>()(
         set(state => ({
           postModel: {
             ...state.postModel,
-            pageOffset: pageModel.page,
+            pageOffset: pageModel.pageOffset,
             pageSize: pageModel.pageSize,
           },
         })),
@@ -47,7 +46,6 @@ export const useEXP_ExpenseStore = create<State & Action>()(
             ...state.postModel,
             sortField: sortModel.length > 0 ? sortModel[0].field : null,
             sortOrder: sortModel.length > 0 ? (sortModel[0].sort as 'asc' | 'desc' | null) : null,
-            sortModel: sortModel.length > 0 ? sortModel : [],
           },
         })),
     }),

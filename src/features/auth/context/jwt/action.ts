@@ -1,10 +1,17 @@
 import { api } from '@/api/client';
 import { setSession } from './utils';
 
+type AuthUser = {
+  UserId: string;
+  OrganizationId: string;
+  Email: string;
+  RoleId: string;
+};
+
 type AuthTokenResponse = {
-  accessToken: string;
-  refreshToken: string;
-  user: object;
+  AccessToken: string;
+  RefreshToken: string;
+  User: AuthUser;
 };
 
 const endpoints = {
@@ -37,7 +44,7 @@ export const login = async (params: SignInParams): Promise<void> => {
   try {
     const data = await api.post<AuthTokenResponse>(endpoints.auth.signIn, params);
 
-    const accessToken = data.accessToken;
+    const accessToken = data.AccessToken;
 
     if (!accessToken) {
       throw new Error('Access token not found in response');
@@ -58,7 +65,7 @@ export const signUp = async (params: SignUpParams): Promise<void> => {
   try {
     const data = await api.post<AuthTokenResponse>(endpoints.auth.signUp, params);
 
-    const accessToken = data.accessToken;
+    const accessToken = data.AccessToken;
 
     if (!accessToken) {
       throw new Error('Access token not found in response');

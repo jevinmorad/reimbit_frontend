@@ -1,18 +1,18 @@
 import { Suspense } from 'react';
-import { Outlet, type RouteObject } from 'react-router-dom';
+import { Navigate, Outlet, type RouteObject } from 'react-router-dom';
 import { AuthGuard } from './auth/auth-guard';
 
+import { LoadingSpinner } from '@/components/loading-page';
+
 function SuspenseOutlet() {
-  const pathname = usePathname();
   return (
-    <Suspense key={pathname} fallback={<>Loading...</>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <Outlet />
     </Suspense>
   );
 }
 
 import MainLayout from '@/layouts/main-layout';
-import { usePathname } from './auth/hooks/use-pathname';
 
 import { EXP_ExpenseRoutes } from './Expenses/MyExpenses/routes';
 
@@ -26,7 +26,11 @@ export const moduleRoutes: RouteObject[] = [
     ),
     children: [
       {
-        path: 'expenses',
+        index: true,
+        element: <Navigate to="/dashboard" replace />,
+      },
+      {
+        path: 'Expenses',
         element: <SuspenseOutlet />,
         children: [
           EXP_ExpenseRoutes

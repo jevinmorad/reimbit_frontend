@@ -1,23 +1,23 @@
-import { EntityId } from "@/hooks/userListView";
+import type { EntityId } from "@/hooks/userListView";
 import z from "zod";
 
 export const EXP_ExpenseAddEditRequest = z.object({
-    expenseId: z.string().nullish(),
-    title: z.string(),
-    categoryId: z.string(),
-    amount: z.number(),
-    currency: z.string(),
+    ExpenseId: z.string().nullish(),
+    Title: z.string(),
+    CategoryId: z.string(),
+    Amount: z.number(),
+    Currency: z.string(),
 })
 
 export type EXP_ExpenseAddEditRequest = z.infer<typeof EXP_ExpenseAddEditRequest>
 
 export type EXP_ExpenseAddEditResponse = {
-    expenseId: EntityId;
-    created: string;
-    title: string;
-    categoryId: EntityId;
-    categoryName: string;
-    amount: number;
-    currency: string;
-    status: string;
+    ExpenseId: EntityId;
+    Created: string;
+    Title: string;
+    CategoryId: EntityId;
+    CategoryName: string;
+    Amount: number;
+    Currency: string;
+    Status: string;
 }

@@ -1,4 +1,4 @@
 export * from '@/api/types';
-export * from './PaginationProps';
+export * from './PaginationModel';
 export * from './SortModel';
 

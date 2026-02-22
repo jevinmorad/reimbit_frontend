@@ -1,5 +1,48 @@
 import { api } from '@/api/client';
 import { paths } from '@/paths';
+import { JWT_STORAGE_KEY } from '@/types/constant';
+
+// ----------------------------------------------------------------------
+// localStorage helpers
+// ----------------------------------------------------------------------
+
+/**
+ * Get stored accessToken from localStorage
+ */
+export function getStoredAccessToken(): string | null {
+  try {
+    return localStorage.getItem(JWT_STORAGE_KEY);
+  } catch (error) {
+    console.error('Failed to get token from localStorage:', error);
+    return null;
+  }
+}
+
+/**
+ * Store accessToken in localStorage
+ */
+export function setStoredAccessToken(token: string): void {
+  try {
+    localStorage.setItem(JWT_STORAGE_KEY, token);
+  } catch (error) {
+    console.error('Failed to store token in localStorage:', error);
+  }
+}
+
+/**
+ * Remove accessToken from localStorage
+ */
+export function clearStoredAccessToken(): void {
+  try {
+    localStorage.removeItem(JWT_STORAGE_KEY);
+  } catch (error) {
+    console.error('Failed to clear token from localStorage:', error);
+  }
+}
+
+// ----------------------------------------------------------------------
+// JWT utilities
+// ----------------------------------------------------------------------
 
 export function jwtDecode(token: string) {
   // eslint-disable-next-line no-useless-catch
@@ -49,6 +92,7 @@ export function tokenExpired(exp: number) {
     // eslint-disable-next-line no-useless-catch
     try {
       api.setAuthToken(null);
+      clearStoredAccessToken(); // Clear from localStorage
       window.location.href = paths.auth.login;
     } catch (error) {
       throw error;
@@ -60,14 +104,23 @@ export async function setSession(accessToken: string | null) {
   // eslint-disable-next-line no-useless-catch
   try {
     if (accessToken) {
+      // Set in API client (for immediate use)
       api.setAuthToken(accessToken);
+      
+      // Persist to localStorage (for page reloads)
+      setStoredAccessToken(accessToken);
+      
       const decodedToken = jwtDecode(accessToken);
 
       if (decodedToken && 'exp' in decodedToken) {
         tokenExpired(decodedToken.exp);
       }
     } else {
+      // Clear from API client
       api.setAuthToken(null);
+      
+      // Clear from localStorage
+      clearStoredAccessToken();
     }
   } catch (error) {
     throw error;

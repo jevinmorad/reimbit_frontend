@@ -1,5 +1,5 @@
-import { EntityId } from "@/hooks/userListView";
-import { PostModel } from "@/types/api";
+import type { EntityId } from "@/hooks/userListView";
+import type { PostModel } from "@/types/api";
 import { useStableRowCount } from "@/utils/useStableRowCount";
 import { useQuery } from "@tanstack/react-query";
 import { EXP_ExpenseSelectPageRequest } from "../types";
@@ -19,16 +19,16 @@ export function useSelectPageQuery(
   return { data: data?.Data ?? [], isLoading, error, totalRecords: rowCount };
 }
 
-export function useSelectPKQuery(MSTIStandardID: EntityId | null | undefined, enabled: boolean) {
+export function useSelectPKQuery(ExpenseId: EntityId | null | undefined, enabled: boolean) {
   return useQuery({
-    ...EXP_ExpenseQueries.selectPK(MSTIStandardID!),
-    enabled: !!MSTIStandardID && enabled,
+    ...EXP_ExpenseQueries.selectPK(ExpenseId!),
+    enabled: !!ExpenseId && enabled,
   });
 }
 
-export function useSelectViewQuery(MSTIStandardID: EntityId | null | undefined, enabled: boolean) {
+export function useSelectViewQuery(ExpenseId: EntityId | null | undefined, enabled: boolean) {
   return useQuery({
-    ...EXP_ExpenseQueries.selectView(MSTIStandardID!),
-    enabled: !!MSTIStandardID && enabled,
+    ...EXP_ExpenseQueries.selectView(ExpenseId!),
+    enabled: !!ExpenseId && enabled,
   });
 }

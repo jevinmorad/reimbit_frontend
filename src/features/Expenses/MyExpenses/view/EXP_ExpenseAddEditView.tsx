@@ -1,9 +1,9 @@
-import { DataModalButtons, DataModalComponentProps } from "@/components/shared/DataModal";
-import { Field } from "@/components/shared/Field";
-import { useApiErrorHandler } from "@/hooks/useApiErrorHandler";
+import { Field, type DataModalButtons, type DataModalComponentProps } from "@/components/shared";
+import { useApiErrorHandler } from "@/features/auth/hooks/useApiErrorHandler";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forwardRef, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
+import { useEXP_CategorySelectComboBox } from "../../Category/api/EXP_CategoryHook";
 import { useCreateEXP_Expense, useUpdateEXP_Expense } from "../api/EXP_ExpenseMutation";
 import { EXP_ExpenseAddEditRequest } from "../types/EXP_ExpenseAddEditTypes";
 
@@ -39,11 +39,13 @@ export const EXP_ExpenseAddEditView = forwardRef<DataModalButtons, DataModalComp
         isSuccess: mutation.isSuccess,
     }));
 
+    const categories = useEXP_CategorySelectComboBox(true);
+
     return (
         <div className="grid grid-cols-12 gap-4">
             <Field.Text
                 control={control}
-                name="title"
+                name="Title"
                 label="Title"
                 placeholder="Expense Title"
                 gridProps={{ size: { xs: 12 } }}
@@ -51,7 +53,7 @@ export const EXP_ExpenseAddEditView = forwardRef<DataModalButtons, DataModalComp
 
             <Field.Number
                 control={control}
-                name="amount"
+                name="Amount"
                 label="Amount"
                 placeholder="0.00"
                 gridProps={{ size: { xs: 12, sm: 6 } }}
@@ -59,27 +61,23 @@ export const EXP_ExpenseAddEditView = forwardRef<DataModalButtons, DataModalComp
 
             <Field.Select
                 control={control}
-                name="currency"
+                name="Currency"
                 label="Currency"
                 placeholder="Select Currency"
                 options={[
-                    { label: "USD", value: "USD" },
-                    { label: "EUR", value: "EUR" },
-                    { label: "INR", value: "INR" },
+                    { Label: "USD", Value: "USD" },
+                    { Label: "EUR", Value: "EUR" },
+                    { Label: "INR", Value: "INR" },
                 ]}
                 gridProps={{ size: { xs: 12, sm: 6 } }}
             />
 
             <Field.Select
                 control={control}
-                name="categoryId"
+                name="CategoryId"
                 label="Category"
                 placeholder="Select Category"
-                options={[
-                    { label: "Food", value: "CAT-001" },
-                    { label: "Travel", value: "CAT-002" },
-                    { label: "Office", value: "CAT-003" },
-                ]}
+                options={categories?.data ?? []}
                 gridProps={{ size: { xs: 12, sm: 6 } }}
             />
         </div>

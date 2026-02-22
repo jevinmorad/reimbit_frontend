@@ -407,7 +407,7 @@ export class ApiClient {
    *   sortOrder: 'asc',
    *   filterModel: { category: 'Electronics' }
    * });
-   * // result.Data: Product[], result.Total: number
+   * // result.data: Product[], result.total: number
    * ```
    */
   async filter<T, TFilter = unknown>(
