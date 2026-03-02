@@ -101,9 +101,20 @@ export function useApiErrorHandler<TFieldValues extends FieldValues>({
    */
   const handleError = useCallback<ErrorHandler>(
     error => {
+      const status = (error as any)?.response?.status;
+      const serverMessage = (error as any)?.response?.data?.Message || (error as any)?.response?.data?.message;
+
       if (error?.message === "Network Error" || (error as any)?.code === "ERR_NETWORK") {
         if (showToast) {
-            toast.error("Network Error: Please check your internet connection.");
+          toast.error("Network Error: Please check your internet connection.");
+        }
+        return;
+      }
+
+      // Hide raw server errors for 500 status codes
+      if (status >= 500) {
+        if (showToast) {
+          toast.error("An internal server error occurred. Please try again later.");
         }
         return;
       }
@@ -119,16 +130,17 @@ export function useApiErrorHandler<TFieldValues extends FieldValues>({
           });
         });
 
-        // Show toast for validation errors
+        // Show toast for validation errors (mask if it looks like a raw system error)
         if (showToast) {
-          toast.error(getUserMessage(error) || errorMessage.validation);
+          const msg = getUserMessage(error) || errorMessage.validation;
+          toast.error(msg.includes("Exception") ? errorMessage.general : msg);
         }
         return;
       }
 
-      // Show toast for non-validation errors
+      // Show toast for other errors (generic message for unknown errors)
       if (showToast) {
-        toast.error(getUserMessage(error) || errorMessage.general);
+        toast.error(serverMessage || errorMessage.general);
       }
     },
     [setError, errorMessage, showToast]

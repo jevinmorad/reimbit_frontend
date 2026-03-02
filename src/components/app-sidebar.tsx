@@ -3,11 +3,11 @@
 import {
   BarChart3,
   BookOpen,
-  Briefcase,
   CheckSquare,
   CreditCard,
   FileText,
   LayoutDashboard,
+  LayoutGrid,
   LifeBuoy,
   Lock,
   Receipt,
@@ -52,14 +52,13 @@ export const data = {
     },
     {
       title: "My Expenses",
-      url: "/Expenses/MyExpenses",
+      url: "/MyExpenses",
       icon: Receipt,
-      items: [
-        { title: "Expense List", url: "/Expenses/MyExpenses" },
-        { title: "New Expense", url: "#" },
-        { title: "Rejected Expenses", url: "#" },
-        { title: "Expense History", url: "#" },
-      ],
+    },
+    {
+      title: "Expense Category",
+      url: "/ExpenseCategories",
+      icon: LayoutGrid,
     },
     {
       title: "Expense Reports",
@@ -95,21 +94,9 @@ export const data = {
       ],
     },
     {
-      title: "Projects",
-      url: "#",
-      icon: Briefcase,
-      items: [
-        { title: "Project List", url: "#" },
-        { title: "Create Project", url: "#" },
-        { title: "Edit / Archive", url: "#" },
-        { title: "Project Members", url: "#" },
-        { title: "Expense View", url: "#" },
-      ],
-    },
-    {
       title: "Categories & Policies",
       url: "#",
-      icon: ShieldCheck, // Or Tags
+      icon: ShieldCheck,
       items: [
         { title: "Category List", url: "#" },
         { title: "Policies", url: "#" },

@@ -10,17 +10,19 @@ const EXP_ExpenseAddEditPage = (props: DataModalSlotProps) => {
         !!selectedRow && !!showModal && true
     );
 
+    const isEditing = !!selectedRow;
+
     return (
         <DataModal
             Component={EXP_ExpenseAddEditView}
-            modalTitle={data?.ExpenseId ? "Add Expense" : "Edit Expense"}
+            modalTitle={isEditing ? "Edit Expense" : "Add Expense"}
             data={data}
             open={showModal}
-            mode={"edit"}
+            mode={isEditing ? "edit" : "add"}
             isLoading={isLoading}
             handleClose={onClose}
-            maxWidth="md"
-            isEditing={!!selectedRow}
+            maxWidth="xl"
+            isEditing={isEditing}
         />
     )
 }

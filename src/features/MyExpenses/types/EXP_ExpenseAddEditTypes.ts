@@ -3,10 +3,10 @@ import z from "zod";
 
 export const EXP_ExpenseAddEditRequest = z.object({
     ExpenseId: z.string().nullish(),
-    Title: z.string(),
-    CategoryId: z.string(),
-    Amount: z.number(),
-    Currency: z.string(),
+    Title: z.string("Title is required"),
+    CategoryId: z.string("Category is required"),
+    Amount: z.number("Amount is required"),
+    Currency: z.string("Currency is required"),
 })
 
 export type EXP_ExpenseAddEditRequest = z.infer<typeof EXP_ExpenseAddEditRequest>

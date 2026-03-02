@@ -5,21 +5,12 @@ import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import dayjs from "dayjs";
 import { CalendarIcon } from "lucide-react";
 import type { Control, FieldValues, Path } from "react-hook-form";
 import { Controller } from "react-hook-form";
+import { getGridClasses, type GridProps } from "./GridUtils";
 
-
-interface GridProps {
-    size?: {
-        xs?: number;
-        sm?: number;
-        md?: number;
-        lg?: number;
-        xl?: number;
-    };
-}
 
 interface BaseFieldProps<T extends FieldValues> {
     control: Control<T>;
@@ -38,18 +29,6 @@ interface SelectOption {
 interface SelectFieldProps<T extends FieldValues> extends BaseFieldProps<T> {
     options: SelectOption[];
 }
-
-const getGridClasses = (gridProps?: GridProps) => {
-    if (!gridProps?.size) return "col-span-12";
-    const { xs, sm, md, lg, xl } = gridProps.size;
-    const classes = [];
-    if (xs) classes.push(`col-span-${xs}`);
-    if (sm) classes.push(`sm:col-span-${sm}`);
-    if (md) classes.push(`md:col-span-${md}`);
-    if (lg) classes.push(`lg:col-span-${lg}`);
-    if (xl) classes.push(`xl:col-span-${xl}`);
-    return classes.join(" ");
-};
 
 const Text = <T extends FieldValues>({ control, name, label, placeholder, gridProps, disabled }: BaseFieldProps<T>) => {
     return (
@@ -87,8 +66,8 @@ const NumberField = <T extends FieldValues>({ control, name, label, placeholder,
                         <Input
                             type="number"
                             {...field}
-                            onChange={(e) => onChange(e.target.valueAsNumber || 0)}
-                            value={field.value || 0}
+                            onChange={(e) => onChange(e.target.value === '' ? undefined : (e.target.valueAsNumber || 0))}
+                            value={field.value ?? ''}
                             placeholder={placeholder}
                             disabled={disabled}
                             className="bg-muted/20 border-muted-foreground/10 focus:bg-background transition-all duration-200"
@@ -110,7 +89,7 @@ const SelectField = <T extends FieldValues>({ control, name, label, placeholder,
                 render={({ field, fieldState: { error } }) => (
                     <div className="space-y-1.5 flex flex-col">
                         <Label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground ml-1">{label}</Label>
-                        <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
+                        <Select onValueChange={field.onChange} value={field.value || ""} disabled={disabled}>
                             <SelectTrigger className="bg-muted/20 border-muted-foreground/10 focus:bg-background transition-all duration-200">
                                 <SelectValue placeholder={placeholder} />
                             </SelectTrigger>
@@ -150,7 +129,7 @@ const DateField = <T extends FieldValues>({ control, name, label, placeholder, g
                                     disabled={disabled}
                                 >
                                     {field.value ? (
-                                        format(new Date(field.value), "PPP")
+                                        dayjs(field.value).format("MMM DD, YYYY")
                                     ) : (
                                         <span>{placeholder || "Pick a date"}</span>
                                     )}
@@ -184,4 +163,3 @@ export const Field = {
     Select: SelectField,
     Date: DateField,
 };
-

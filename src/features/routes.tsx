@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Navigate, Outlet, type RouteObject } from 'react-router-dom';
 import { AuthGuard } from './auth/auth-guard';
 
@@ -14,7 +14,8 @@ function SuspenseOutlet() {
 
 import MainLayout from '@/layouts/main-layout';
 
-import { EXP_ExpenseRoutes } from './Expenses/MyExpenses/routes';
+const EXP_ExpenseListPage = lazy(() => import('./MyExpenses/pages/EXP_ExpenseListPage'));
+const CAT_CategoryListPage = lazy(() => import('./ExpenseCategories/pages/CAT_CategoryListPage'));
 
 export const moduleRoutes: RouteObject[] = [
   {
@@ -30,10 +31,17 @@ export const moduleRoutes: RouteObject[] = [
         element: <Navigate to="/dashboard" replace />,
       },
       {
-        path: 'Expenses',
+        path: 'MyExpenses',
         element: <SuspenseOutlet />,
         children: [
-          EXP_ExpenseRoutes
+          { element: <EXP_ExpenseListPage />, index: true }
+        ],
+      },
+      {
+        path: 'ExpenseCategories',
+        element: <SuspenseOutlet />,
+        children: [
+          { element: <CAT_CategoryListPage />, index: true }
         ],
       },
       {

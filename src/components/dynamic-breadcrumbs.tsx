@@ -15,7 +15,6 @@ const ROUTE_NAME_MAP: Record<string, string> = {
     reports: "Reports",
     approvals: "Approvals",
     finance: "Finance",
-    projects: "Projects",
     categories: "Categories",
     policies: "Policies",
     analytics: "Analytics",

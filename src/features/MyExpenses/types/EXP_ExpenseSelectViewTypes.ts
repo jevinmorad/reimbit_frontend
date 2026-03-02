@@ -2,14 +2,14 @@ export type EXP_ExpenseSelectViewResponse = {
     Title: string;
     Amount: number;
     Currency: string;
-    Description: string;
-    AttachmentUrl: string;
+    Description: string | null;
+    AttachmentUrl: string | null;
     ExpenseStatus: string;
-    RejectionReason: string;
+    RejectionReason: string | null;
     CategoryName: string;
     UserDisplayName: string;
     CreatedByUserDisplayName: string;
-    ModifiedByUserDisplayName: string;
-    Created: Date;
-    Modified: Date;
+    ModifiedByUserDisplayName: string | null;
+    Created: string;
+    Modified: string | null;
 }

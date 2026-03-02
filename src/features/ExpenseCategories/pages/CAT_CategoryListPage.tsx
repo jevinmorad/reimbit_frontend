@@ -4,19 +4,18 @@ import { Button } from "@/components/ui/button"
 import { DataTable } from "@/components/ui/data-table"
 import { useApiErrorHandler } from "@/features/auth/hooks/useApiErrorHandler"
 import useListView, { type EntityId } from "@/hooks/userListView"
-import { formatCurrency, formatDate } from "@/lib/utils"
 import { type ColumnDef } from "@tanstack/react-table"
 import { Edit, Eye, Trash2 } from "lucide-react"
 import React, { useMemo } from "react"
-import { useSelectPageQuery } from "../api/EXP_ExpenseHooks"
-import { useDeleteEXP_Expense } from "../api/EXP_ExpenseMutation"
-import { useEXP_ExpenseStore } from "../api/EXP_ExpenseStore"
-import type { EXP_ExpenseSelectPageResponse } from "../types"
-import { EXP_ExpenseFilterView } from "../view"
-import EXP_ExpenseAddEditPage from "./EXP_ExpenseAddEditPage"
-import EXP_ExpenseViewPage from "./EXP_ExpenseViewPage"
+import { useSelectPageQuery } from "../api/CAT_CategoryHooks"
+import { useDeleteCAT_Category } from "../api/CAT_CategoryMutation"
+import { useCAT_CategoryStore } from "../api/CAT_CategoryStore"
+import type { CAT_CategorySelectPageResponse } from "../types"
+import { CAT_CategoryFilterView } from "../view"
+import CAT_CategoryAddEditPage from "./CAT_CategoryAddEditPage"
+import CAT_CategoryViewPage from "./CAT_CategoryViewPage"
 
-const EXP_ExpenseListPage = () => {
+const CAT_CategoryListPage = () => {
     const {
         modal: {
             formView,
@@ -32,16 +31,16 @@ const EXP_ExpenseListPage = () => {
         selectedRowId
     } = useListView()
 
-    const { postModel, handlePagination, handleSorting } = useEXP_ExpenseStore()
+    const { postModel, handlePagination, handleSorting } = useCAT_CategoryStore()
 
     const { handleSuccess, handleError } = useApiErrorHandler({
-        namespace: "Expense",
+        namespace: "Expense Category",
         showToast: true,
     })
 
     const { data, totalRecords, isLoading } = useSelectPageQuery(postModel, true)
 
-    const deleteMutation = useDeleteEXP_Expense(handleSuccess, handleError)
+    const deleteMutation = useDeleteCAT_Category(handleSuccess, handleError)
 
     const [confirmOpen, setConfirmOpen] = React.useState(false)
     const [deleteId, setDeleteId] = React.useState<EntityId | null>(null)
@@ -55,7 +54,6 @@ const EXP_ExpenseListPage = () => {
         if (deleteId) {
             deleteMutation.mutate(deleteId, {
                 onSuccess: () => {
-                    // Toast handled globally or query invalidated
                 },
                 onSettled: () => {
                     setConfirmOpen(false)
@@ -65,36 +63,27 @@ const EXP_ExpenseListPage = () => {
         }
     }
 
-    const columns = useMemo<ColumnDef<EXP_ExpenseSelectPageResponse>[]>(() => [
+    const columns = useMemo<ColumnDef<CAT_CategorySelectPageResponse>[]>(() => [
         {
-            accessorKey: "Created",
-            header: "Created",
-            cell: ({ row }) => formatDate(row.getValue("Created"))
-        },
-        {
-            accessorKey: "Title",
-            header: "Title",
+            accessorKey: "CategoryName",
+            header: "Category Name",
             cell: ({ row }) => (
                 <span
-                    className="cursor-pointer text-primary hover:underline"
-                    onClick={() => showDetailView(row.original.ExpenseId)}
+                    className="cursor-pointer text-primary hover:underline font-medium"
+                    onClick={() => showDetailView(row.original.CategoryId)}
                 >
-                    {row.getValue("Title")}
+                    {row.getValue("CategoryName")}
                 </span>
             )
         },
         {
-            accessorKey: "CategoryName",
-            header: "Category",
-        },
-        {
-            accessorKey: "Amount",
-            header: "Amount",
-            cell: ({ row }) => formatCurrency(row.getValue("Amount"), row.original.Currency)
-        },
-        {
-            accessorKey: "Status",
-            header: "Status",
+            accessorKey: "Description",
+            header: "Description",
+            cell: ({ row }) => (
+                <span className="text-muted-foreground truncate max-w-[300px] inline-block">
+                    {row.getValue("Description") || "-"}
+                </span>
+            )
         },
         {
             id: "actions",
@@ -105,7 +94,7 @@ const EXP_ExpenseListPage = () => {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-primary"
-                        onClick={() => showDetailView(row.original.ExpenseId)}
+                        onClick={() => showDetailView(row.original.CategoryId)}
                         title="View"
                     >
                         <Eye className="h-4 w-4" />
@@ -114,7 +103,7 @@ const EXP_ExpenseListPage = () => {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-primary"
-                        onClick={() => showEditView(row.original.ExpenseId)}
+                        onClick={() => showEditView(row.original.CategoryId)}
                         title="Edit"
                     >
                         <Edit className="h-4 w-4" />
@@ -123,7 +112,7 @@ const EXP_ExpenseListPage = () => {
                         variant="ghost"
                         size="icon"
                         className="h-8 w-8 text-destructive"
-                        onClick={() => handleDelete(row.original.ExpenseId)}
+                        onClick={() => handleDelete(row.original.CategoryId)}
                         title="Delete"
                     >
                         <Trash2 className="h-4 w-4" />
@@ -147,19 +136,19 @@ const EXP_ExpenseListPage = () => {
                 onInsert={showAddView}
             />
 
-            <EXP_ExpenseAddEditPage
+            <CAT_CategoryAddEditPage
                 showModal={formView}
                 selectedRow={selectedRowId}
                 onClose={closeAddEditView}
             />
 
-            <EXP_ExpenseViewPage
+            <CAT_CategoryViewPage
                 showModal={detailView}
                 selectedRow={selectedRowId}
                 onClose={closeDetailView}
             />
 
-            <EXP_ExpenseFilterView
+            <CAT_CategoryFilterView
                 openFilter={openFilter}
                 setOpenFilter={setOpenFilter}
             />
@@ -168,8 +157,8 @@ const EXP_ExpenseListPage = () => {
                 isOpen={confirmOpen}
                 onClose={() => setConfirmOpen(false)}
                 onConfirm={confirmDelete}
-                title="Delete Expense"
-                description="Are you sure you want to delete this expense? This action cannot be undone."
+                title="Delete Category"
+                description="Are you sure you want to delete this category? This action cannot be undone."
                 variant="destructive"
                 confirmText="Delete"
             />
@@ -177,4 +166,4 @@ const EXP_ExpenseListPage = () => {
     )
 }
 
-export default EXP_ExpenseListPage;
+export default CAT_CategoryListPage;

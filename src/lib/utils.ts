@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import dayjs from "dayjs";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -12,10 +13,7 @@ export function formatCurrency(value: number, currency: string = "USD") {
   }).format(value);
 }
 
-export function formatDate(date: string | Date) {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+export function formatDate(date: string | Date | null | undefined) {
+  if (!date) return "-";
+  return dayjs(date).format("MMM DD, YYYY");
 }

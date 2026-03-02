@@ -36,7 +36,7 @@ export function FilterDrawerContainer({
                 showCloseButton={false}
             >
                 {/* Header */}
-                <SheetHeader className="px-6 py-6 bg-gradient-to-br from-primary/5 via-background to-background border-b flex flex-row items-center justify-between space-y-0">
+                <SheetHeader className="px-6 py-6 bg-muted/30 border-b flex flex-row items-center justify-between space-y-0">
                     <SheetTitle className="text-xl font-bold tracking-tight">{title}</SheetTitle>
                     <Button
                         variant="ghost"
@@ -56,7 +56,7 @@ export function FilterDrawerContainer({
                 </div>
 
                 {/* Footer - Fixed */}
-                <SheetFooter className="px-6 py-6 border-t bg-muted/20 sm:justify-between flex-row gap-4 items-center rounded-b-none">
+                <SheetFooter className="px-6 py-6 border-t bg-muted/50 sm:justify-between flex-row gap-4 items-center rounded-b-none">
                     <Button
                         variant="outline"
                         className="flex-1 mt-0 font-medium hover:bg-muted transition-colors bg-background px-6"

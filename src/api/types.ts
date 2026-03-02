@@ -177,7 +177,7 @@ export interface OperationResponse {
 /**
  * Callback handler for successful operations
  */
-export type SuccessHandler = (isUpdate: boolean, rowsAffected?: number) => void;
+export type SuccessHandler = (operation: 'create' | 'update' | 'delete', rowsAffected?: number) => void;
 
 /**
  * Callback handler for failed operations

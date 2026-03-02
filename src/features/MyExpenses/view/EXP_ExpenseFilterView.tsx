@@ -16,10 +16,9 @@ export const EXP_ExpenseFilterView = ({ openFilter, setOpenFilter }: EXP_Expense
     const { control, handleSubmit, reset } = useForm<EXP_ExpenseSelectPageRequest>({
         resolver: zodResolver(EXP_ExpenseSelectPageRequest),
         defaultValues: postModel.filterModel || {},
-        mode: "onSubmit" // or onChange if we want instant feedback, but usually "Apply" implies submit
+        mode: "onSubmit"
     })
 
-    // Reset form when drawer opens to match store state, in case it was changed elsewhere or cleared
     useEffect(() => {
         if (openFilter) {
             reset(postModel.filterModel || {})
@@ -32,15 +31,12 @@ export const EXP_ExpenseFilterView = ({ openFilter, setOpenFilter }: EXP_Expense
     }
 
     const onClearAll = () => {
-        const emptyData = {} as EXP_ExpenseSelectPageRequest // Or explicit fields if needed
-        reset(emptyData)
-        // handleFiltering(emptyData) // Optional: clear filter immediately on Clear All? Reference suggests yes.
-        handleFiltering(emptyData)
-        // setOpenFilter(false) // Keep open? Reference: reset resets form, but maybe we want to keep it open to re-apply? 
-        // Reference code: 
-        // handleFiltering(getEmptyObject...);
-        // setFriendlyFilter(null);
-        // Doesn't explicitly close. I'll keep it open.
+        reset({
+            Title: "",
+            FromDate: undefined,
+            ToDate: undefined,
+        } as any)
+        handleFiltering({})
     }
 
     return (
@@ -55,6 +51,7 @@ export const EXP_ExpenseFilterView = ({ openFilter, setOpenFilter }: EXP_Expense
                 control={control}
                 name="Title"
                 label="Title"
+                placeholder="Expense Title"
                 gridProps={{ size: { xs: 12, sm: 12, md: 12, lg: 12, xl: 12 } }}
             />
             <div className="grid grid-cols-2 gap-4">

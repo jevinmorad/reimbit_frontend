@@ -7,8 +7,9 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { cn } from "@/lib/utils"
 import { Loader2 } from "lucide-react"
-import React, { useEffect, useRef } from "react"
+import React, { useRef } from "react"
 
 export interface DataModalButtons {
     onSubmit: () => void
@@ -20,6 +21,7 @@ export type DataModalComponentProps<TModel> = {
     data?: TModel
     isEditing?: boolean
     onClose?: () => void
+    onLoading?: (isLoading: boolean) => void
 }
 
 export type DataModalComponent<TModel> = React.ForwardRefExoticComponent<
@@ -55,28 +57,29 @@ export function DataModal<TModel = unknown>(props: DataModalProps<TModel>) {
     } = props
 
     const formRef = useRef<DataModalButtons>(null)
-
-    useEffect(() => {
-        if (formRef.current?.isSuccess) {
-            handleClose?.()
-        }
-    }, [formRef.current?.isSuccess, handleClose]) // dependent on isSuccess value
+    const [submitting, setSubmitting] = React.useState(false)
 
     const maxWidthMap: Record<string, string> = {
         xs: 'sm:max-w-xs',
         sm: 'sm:max-w-sm',
-        md: 'sm:max-w-[600px]',
+        md: 'sm:max-w-md',
         lg: 'sm:max-w-lg',
         xl: 'sm:max-w-xl',
     };
-    const maxWidthClass = maxWidthMap[maxWidth || 'md'] || 'sm:max-w-[600px]';
+    const maxWidthClass = maxWidthMap[maxWidth || 'md'] || 'sm:max-w-md';
+
+    const displayTitle = modalTitle || (
+        mode === 'add' ? 'Add Item' :
+            mode === 'edit' ? 'Edit Item' :
+                'View Details'
+    );
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent className={`${maxWidthClass} max-h-[90vh] overflow-y-auto flex flex-col gap-0 p-0 rounded-2xl border-none shadow-2xl`}>
-                <DialogHeader className="p-6 pb-4 bg-gradient-to-br from-primary/5 via-background to-background border-b rounded-t-2xl">
+            <DialogContent className={cn(maxWidthClass, "max-h-[90vh] flex flex-col gap-0 p-0 rounded-2xl border-none shadow-2xl overflow-hidden")}>
+                <DialogHeader className="p-6 pb-4 bg-muted/30 border-b rounded-t-2xl">
                     <div className="space-y-1">
-                        <DialogTitle className="text-xl font-semibold tracking-tight">{modalTitle}</DialogTitle>
+                        <DialogTitle className="text-xl font-semibold tracking-tight">{displayTitle}</DialogTitle>
                         {subTitle && (
                             <DialogDescription className="text-muted-foreground/80">
                                 {subTitle}
@@ -85,7 +88,7 @@ export function DataModal<TModel = unknown>(props: DataModalProps<TModel>) {
                     </div>
                 </DialogHeader>
 
-                <div className="flex-1 overflow-y-auto p-8 pt-6">
+                <div className="flex-1 overflow-y-auto p-6">
                     {isLoading ? (
                         <div className="flex h-[200px] items-center justify-center">
                             <Loader2 className="h-8 w-8 animate-spin text-primary opacity-50" />
@@ -97,13 +100,14 @@ export function DataModal<TModel = unknown>(props: DataModalProps<TModel>) {
                                 data={data}
                                 isEditing={isEditing}
                                 onClose={handleClose}
+                                onLoading={setSubmitting}
                             />
                         </div>
                     )}
                 </div>
 
                 {mode !== 'view' && (
-                    <DialogFooter className="p-6 pt-4 border-t bg-muted/20 rounded-b-2xl flex flex-row justify-end items-center gap-3">
+                    <DialogFooter className="p-6 pt-4 border-t bg-muted/50 rounded-b-2xl flex flex-row justify-end items-center gap-3">
                         <Button
                             variant="outline"
                             onClick={handleClose}
@@ -114,10 +118,10 @@ export function DataModal<TModel = unknown>(props: DataModalProps<TModel>) {
                         <Button
                             onClick={() => formRef.current?.onSubmit?.()}
                             type="button"
-                            disabled={formRef.current?.isPending}
+                            disabled={submitting}
                             className="px-8 font-semibold shadow-lg shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95"
                         >
-                            {formRef.current?.isPending && (
+                            {submitting && (
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             )}
                             Save Changes
@@ -125,6 +129,6 @@ export function DataModal<TModel = unknown>(props: DataModalProps<TModel>) {
                     </DialogFooter>
                 )}
             </DialogContent>
-        </Dialog>
+        </Dialog >
     )
 }

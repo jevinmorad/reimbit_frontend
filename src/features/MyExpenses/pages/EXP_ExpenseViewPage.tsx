@@ -19,7 +19,7 @@ const EXP_ExpenseViewPage = ({ selectedRow, showModal, onClose }: DataModalSlotP
             handleClose={onClose}
             modalTitle={data?.Title ? data.Title : "View Expense"}
             open={showModal}
-            maxWidth="md"
+            maxWidth="xl"
         />
     );
 };

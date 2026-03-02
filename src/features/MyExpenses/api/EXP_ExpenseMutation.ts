@@ -23,7 +23,7 @@ export const useCreateEXP_Expense = (
       handleError(error);
     },
     onSuccess: response => {
-      handleSuccess(false, response?.rowsAffected);
+      handleSuccess('create', response?.rowsAffected);
       return { lastUpdated: Date.now() };
     },
     onSettled: (_response, _error, _variables) => {
@@ -47,7 +47,7 @@ export const useUpdateEXP_Expense = (
       handleError(error);
     },
     onSuccess: response => {
-      handleSuccess(true, response?.rowsAffected);
+      handleSuccess('update', response?.rowsAffected);
     },
     onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({
@@ -75,7 +75,7 @@ export const useDeleteEXP_Expense = (
       handleError(error);
     },
     onSuccess: response => {
-      handleSuccess(true, response?.rowsAffected);
+      handleSuccess('delete', response?.rowsAffected);
     },
     onSettled: () => {
       queryClient.invalidateQueries({
