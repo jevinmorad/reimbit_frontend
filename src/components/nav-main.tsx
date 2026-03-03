@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { ChevronRight, type LucideIcon } from "lucide-react"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 import {
   Collapsible,
@@ -49,10 +49,10 @@ export function NavMain({
                   tooltip={item.title}
                   className={cn("font-medium", pathname === item.url && "text-primary bg-primary/10")}
                 >
-                  <a href={item.url}>
+                  <Link to={item.url}>
                     <item.icon />
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <>
@@ -73,9 +73,9 @@ export function NavMain({
                                 pathname === subItem.url ? "text-primary font-medium" : "text-muted-foreground"
                               )}
                             >
-                              <a href={subItem.url}>
+                              <Link to={subItem.url}>
                                 <span>{subItem.title}</span>
-                              </a>
+                              </Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         ))}

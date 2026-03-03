@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import type { LucideIcon } from "lucide-react"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar"
 
 export function NavSecondary({
@@ -26,10 +26,10 @@ export function NavSecondary({
                 size="sm"
                 className={cn(pathname === item.url && "text-primary bg-primary/10")}
               >
-                <a href={item.url}>
+                <Link to={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
