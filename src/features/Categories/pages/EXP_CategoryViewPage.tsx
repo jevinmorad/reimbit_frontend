@@ -1,9 +1,9 @@
 import { DataModal } from "@/components/shared";
 import type { DataModalSlotProps } from "@/types/DataModelSlotProps";
-import { useSelectViewQuery } from "../api/CAT_CategoryHooks";
-import { CAT_CategoryDetailView } from "../view";
+import { useSelectViewQuery } from "../api/EXP_CategoryHooks";
+import { EXP_CategoryDetailView } from "../view";
 
-const CAT_CategoryViewPage = (props: DataModalSlotProps) => {
+const EXP_CategoryViewPage = (props: DataModalSlotProps) => {
     const { selectedRow, showModal, onClose } = props;
     const { data, isLoading } = useSelectViewQuery(
         selectedRow!,
@@ -12,7 +12,7 @@ const CAT_CategoryViewPage = (props: DataModalSlotProps) => {
 
     return (
         <DataModal
-            Component={CAT_CategoryDetailView}
+            Component={EXP_CategoryDetailView}
             modalTitle="Category Details"
             data={data}
             open={showModal}
@@ -24,4 +24,4 @@ const CAT_CategoryViewPage = (props: DataModalSlotProps) => {
     )
 }
 
-export default CAT_CategoryViewPage;
+export default EXP_CategoryViewPage;

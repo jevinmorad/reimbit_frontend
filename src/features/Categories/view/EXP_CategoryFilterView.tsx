@@ -2,19 +2,19 @@ import { Field, FilterDrawerContainer } from "@/components/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useCAT_CategoryStore } from "../api/CAT_CategoryStore";
-import { CAT_CategorySelectPageRequest } from "../types";
+import { useEXP_CategoryStore } from "../api/EXP_CategoryStore";
+import { EXP_CategorySelectPageRequest } from "../types";
 
-interface CAT_CategoryFilterViewProps {
+interface EXP_CategoryFilterViewProps {
     openFilter: boolean;
     setOpenFilter: (open: boolean) => void;
 }
 
-export const CAT_CategoryFilterView = ({ openFilter, setOpenFilter }: CAT_CategoryFilterViewProps) => {
-    const { postModel, handleFiltering } = useCAT_CategoryStore();
+export const EXP_CategoryFilterView = ({ openFilter, setOpenFilter }: EXP_CategoryFilterViewProps) => {
+    const { postModel, handleFiltering } = useEXP_CategoryStore();
 
-    const { control, handleSubmit, reset } = useForm<CAT_CategorySelectPageRequest>({
-        resolver: zodResolver(CAT_CategorySelectPageRequest),
+    const { control, handleSubmit, reset } = useForm<EXP_CategorySelectPageRequest>({
+        resolver: zodResolver(EXP_CategorySelectPageRequest),
         defaultValues: postModel.filterModel || {},
         mode: "onSubmit"
     });
@@ -25,7 +25,7 @@ export const CAT_CategoryFilterView = ({ openFilter, setOpenFilter }: CAT_Catego
         }
     }, [openFilter, postModel.filterModel, reset]);
 
-    const onSubmit = (data: CAT_CategorySelectPageRequest) => {
+    const onSubmit = (data: EXP_CategorySelectPageRequest) => {
         handleFiltering(data);
         setOpenFilter(false);
     };

@@ -1,6 +1,6 @@
 import type { EntityId } from "@/hooks/userListView";
 
-export const CAT_CategoryEndpoints = {
+export const EXP_CategoryEndpoints = {
     SelectPage: `/api/ExpenseCategory/SelectPage`,
     Insert: `/api/ExpenseCategory/Insert`,
     Update: `/api/ExpenseCategory`,

@@ -3,7 +3,7 @@ import { useApiErrorHandler } from "@/features/auth/hooks/useApiErrorHandler";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
-import { useSelectComboBox } from "../../ExpenseCategories/api/CAT_CategoryHooks";
+import { useSelectComboBox } from "../../Categories/api/EXP_CategoryHooks";
 import { useCreateEXP_Expense, useUpdateEXP_Expense } from "../api/EXP_ExpenseMutation";
 import { EXP_ExpenseAddEditRequest } from "../types/EXP_ExpenseAddEditTypes";
 

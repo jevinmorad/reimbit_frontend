@@ -2,20 +2,20 @@ import { api } from "@/api/client";
 import type { EntityId } from "@/hooks/userListView";
 import type { ApiError, ErrorHandler, OperationResponse, SuccessHandler } from "@/types/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CAT_CategoryAddEditRequest } from "../types";
-import { CAT_CategoryEndpoints } from "./CAT_CategoryEndpoints";
-import { CAT_CategoryQueries } from "./CAT_CategoryQuery";
-import { useCAT_CategoryStore } from "./CAT_CategoryStore";
+import { EXP_CategoryAddEditRequest } from "../types";
+import { EXP_CategoryEndpoints } from "./EXP_CategoryEndpoints";
+import { EXP_CategoryQueries } from "./EXP_CategoryQuery";
+import { useEXP_CategoryStore } from "./EXP_CategoryStore";
 
-export const useCreateCAT_Category = (
+export const useCreateEXP_Category = (
   handleSuccess: SuccessHandler,
   handleError: ErrorHandler
 ) => {
   const queryClient = useQueryClient();
-  const { postModel } = useCAT_CategoryStore();
-  return useMutation<OperationResponse, ApiError, CAT_CategoryAddEditRequest>({
-    mutationFn: async (formData: CAT_CategoryAddEditRequest) =>
-      api.post<OperationResponse>(CAT_CategoryEndpoints.Insert, formData),
+  const { postModel } = useEXP_CategoryStore();
+  return useMutation<OperationResponse, ApiError, EXP_CategoryAddEditRequest>({
+    mutationFn: async (formData: EXP_CategoryAddEditRequest) =>
+      api.post<OperationResponse>(EXP_CategoryEndpoints.Insert, formData),
     onError: error => {
       handleError(error);
     },
@@ -25,21 +25,21 @@ export const useCreateCAT_Category = (
     },
     onSettled: (_response, _error, _variables) => {
       queryClient.invalidateQueries({
-        queryKey: CAT_CategoryQueries.selectPage(postModel).queryKey,
+        queryKey: EXP_CategoryQueries.SelectPage(postModel).queryKey,
       });
     },
   });
 };
 
-export const useUpdateCAT_Category = (
+export const useUpdateEXP_Category = (
   handleSuccess: SuccessHandler,
   handleError: ErrorHandler
 ) => {
   const queryClient = useQueryClient();
-  const { postModel } = useCAT_CategoryStore();
-  return useMutation<OperationResponse, ApiError, CAT_CategoryAddEditRequest>({
-    mutationFn: async (formData: CAT_CategoryAddEditRequest) =>
-      api.put<OperationResponse>(CAT_CategoryEndpoints.Update, formData),
+  const { postModel } = useEXP_CategoryStore();
+  return useMutation<OperationResponse, ApiError, EXP_CategoryAddEditRequest>({
+    mutationFn: async (formData: EXP_CategoryAddEditRequest) =>
+      api.put<OperationResponse>(EXP_CategoryEndpoints.Update, formData),
     onError: error => {
       handleError(error);
     },
@@ -48,26 +48,26 @@ export const useUpdateCAT_Category = (
     },
     onSettled: (_data, _error, variables) => {
       queryClient.invalidateQueries({
-        queryKey: CAT_CategoryQueries.selectPage(postModel).queryKey,
+        queryKey: EXP_CategoryQueries.SelectPage(postModel).queryKey,
       });
       if (variables.CategoryId) {
         queryClient.invalidateQueries({
-          queryKey: CAT_CategoryQueries.selectPK(variables.CategoryId).queryKey,
+          queryKey: EXP_CategoryQueries.SelectPK(variables.CategoryId).queryKey,
         });
       }
     },
   });
 };
 
-export const useDeleteCAT_Category = (
+export const useDeleteEXP_Category = (
   handleSuccess: SuccessHandler,
   handleError: ErrorHandler
 ) => {
   const queryClient = useQueryClient();
-  const { postModel } = useCAT_CategoryStore();
+  const { postModel } = useEXP_CategoryStore();
   return useMutation<OperationResponse, ApiError, EntityId>({
     mutationFn: async (categoryId: EntityId) =>
-      api.delete<OperationResponse>(CAT_CategoryEndpoints.Delete(categoryId)),
+      api.delete<OperationResponse>(EXP_CategoryEndpoints.Delete(categoryId)),
     onError: error => {
       handleError(error);
     },
@@ -76,7 +76,7 @@ export const useDeleteCAT_Category = (
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: CAT_CategoryQueries.selectPage(postModel).queryKey,
+        queryKey: EXP_CategoryQueries.SelectPage(postModel).queryKey,
       });
     },
   });

@@ -15,7 +15,7 @@ function SuspenseOutlet() {
 import MainLayout from '@/layouts/main-layout';
 
 const EXP_ExpenseListPage = lazy(() => import('./MyExpenses/pages/EXP_ExpenseListPage'));
-const CAT_CategoryListPage = lazy(() => import('./ExpenseCategories/pages/CAT_CategoryListPage'));
+const EXP_CategoryListPage = lazy(() => import('./Categories/pages/EXP_CategoryListPage'));
 
 export const moduleRoutes: RouteObject[] = [
   {
@@ -38,10 +38,10 @@ export const moduleRoutes: RouteObject[] = [
         ],
       },
       {
-        path: 'ExpenseCategories',
+        path: 'Categories',
         element: <SuspenseOutlet />,
         children: [
-          { element: <CAT_CategoryListPage />, index: true }
+          { element: <EXP_CategoryListPage />, index: true }
         ],
       },
       {

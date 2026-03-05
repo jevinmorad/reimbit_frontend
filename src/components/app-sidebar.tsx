@@ -57,8 +57,8 @@ export const data = {
       icon: Receipt,
     },
     {
-      title: "Expense Category",
-      url: "/ExpenseCategories",
+      title: "Category",
+      url: "/Categories",
       icon: LayoutGrid,
     },
     {

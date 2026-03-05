@@ -1,9 +1,9 @@
 import { DataModal } from "@/components/shared";
 import type { DataModalSlotProps } from "@/types/DataModelSlotProps";
-import { useSelectPKQuery } from "../api/CAT_CategoryHooks";
-import { CAT_CategoryAddEditView } from "../view";
+import { useSelectPKQuery } from "../api/EXP_CategoryHooks";
+import { EXP_CategoryAddEditView } from "../view";
 
-const CAT_CategoryAddEditPage = (props: DataModalSlotProps) => {
+const EXP_CategoryAddEditPage = (props: DataModalSlotProps) => {
     const { selectedRow, showModal, onClose } = props;
     const { data, isLoading } = useSelectPKQuery(
         selectedRow!,
@@ -14,7 +14,7 @@ const CAT_CategoryAddEditPage = (props: DataModalSlotProps) => {
 
     return (
         <DataModal
-            Component={CAT_CategoryAddEditView}
+            Component={EXP_CategoryAddEditView}
             modalTitle={isEditing ? "Edit Category" : "Add Category"}
             data={data}
             open={showModal}
@@ -27,4 +27,4 @@ const CAT_CategoryAddEditPage = (props: DataModalSlotProps) => {
     )
 }
 
-export default CAT_CategoryAddEditPage;
+export default EXP_CategoryAddEditPage;

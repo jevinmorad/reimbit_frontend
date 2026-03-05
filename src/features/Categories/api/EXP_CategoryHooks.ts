@@ -1,15 +1,15 @@
 import type { PostModel } from "@/api/types";
 import type { EntityId } from "@/hooks/userListView";
 import { useQuery } from "@tanstack/react-query";
-import type { CAT_CategorySelectPageRequest } from "../types";
-import { CAT_CategoryQueries } from "./CAT_CategoryQuery";
+import type { EXP_CategorySelectPageRequest } from "../types";
+import { EXP_CategoryQueries } from "./EXP_CategoryQuery";
 
 export const useSelectPageQuery = (
-  postModel: PostModel<CAT_CategorySelectPageRequest>,
+  postModel: PostModel<EXP_CategorySelectPageRequest>,
   enabled: boolean = true
 ) => {
   const query = useQuery({
-    ...CAT_CategoryQueries.SelectPage(postModel),
+    ...EXP_CategoryQueries.SelectPage(postModel),
     enabled,
   });
 
@@ -23,20 +23,20 @@ export const useSelectPageQuery = (
 
 export const useSelectPKQuery = (categoryId: EntityId, enabled: boolean = true) => {
   return useQuery({
-    ...CAT_CategoryQueries.SelectPK(categoryId),
+    ...EXP_CategoryQueries.SelectPK(categoryId),
     enabled: enabled && !!categoryId,
   });
 };
 
 export const useSelectViewQuery = (categoryId: EntityId, enabled: boolean = true) => {
   return useQuery({
-    ...CAT_CategoryQueries.SelectView(categoryId),
+    ...EXP_CategoryQueries.SelectView(categoryId),
     enabled: enabled && !!categoryId,
   });
 };
 
 export const useSelectComboBox = () => {
   return useQuery({
-    ...CAT_CategoryQueries.SelectComboBox(),
+    ...EXP_CategoryQueries.SelectComboBox(),
   });
 };

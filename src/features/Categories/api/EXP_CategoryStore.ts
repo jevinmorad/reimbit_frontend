@@ -4,20 +4,20 @@ import type { PaginationModel, SortModel } from "@/types/api";
 import { calculateFilterCount } from "@/utils/calculateFilterCounts";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CAT_CategorySelectPageRequest } from "../types";
+import { EXP_CategorySelectPageRequest } from "../types";
 
 type State = {
   filterCount: number;
-  postModel: PostModel<CAT_CategorySelectPageRequest>;
+  postModel: PostModel<EXP_CategorySelectPageRequest>;
 };
 
 type Action = {
-  handleFiltering: (filterModel: CAT_CategorySelectPageRequest) => void;
+  handleFiltering: (filterModel: EXP_CategorySelectPageRequest) => void;
   handlePagination: (pageModel: PaginationModel) => void;
   handleSorting: (sortModel: SortModel) => void;
 };
 
-export const useCAT_CategoryStore = create<State & Action>()(
+export const useEXP_CategoryStore = create<State & Action>()(
   persist(
     set => ({
       postModel: {
@@ -27,7 +27,7 @@ export const useCAT_CategoryStore = create<State & Action>()(
         sortOrder: null,
       },
       filterCount: 0,
-      handleFiltering: (filterModel: CAT_CategorySelectPageRequest) =>
+      handleFiltering: (filterModel: EXP_CategorySelectPageRequest) =>
         set(state => ({
           filterCount: filterModel ? calculateFilterCount(filterModel) : 0,
           postModel: { ...state.postModel, filterModel: { ...filterModel } },
@@ -50,7 +50,7 @@ export const useCAT_CategoryStore = create<State & Action>()(
         })),
     }),
     {
-      name: "CAT_Category",
+      name: "EXP_Category",
       partialize: state => ({
         postModel: state.postModel,
         filterCount: state.filterCount,

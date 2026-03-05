@@ -7,15 +7,15 @@ import useListView, { type EntityId } from "@/hooks/userListView"
 import { type ColumnDef } from "@tanstack/react-table"
 import { Edit, Eye, Trash2 } from "lucide-react"
 import React, { useMemo } from "react"
-import { useSelectPageQuery } from "../api/CAT_CategoryHooks"
-import { useDeleteCAT_Category } from "../api/CAT_CategoryMutation"
-import { useCAT_CategoryStore } from "../api/CAT_CategoryStore"
-import type { CAT_CategorySelectPageResponse } from "../types"
-import { CAT_CategoryFilterView } from "../view"
-import CAT_CategoryAddEditPage from "./CAT_CategoryAddEditPage"
-import CAT_CategoryViewPage from "./CAT_CategoryViewPage"
+import { useSelectPageQuery } from "../api/EXP_CategoryHooks"
+import { useDeleteEXP_Category } from "../api/EXP_CategoryMutation"
+import { useEXP_CategoryStore } from "../api/EXP_CategoryStore"
+import type { EXP_CategorySelectPageResponse } from "../types"
+import { EXP_CategoryFilterView } from "../view"
+import EXP_CategoryAddEditPage from "./EXP_CategoryAddEditPage"
+import EXP_CategoryViewPage from "./EXP_CategoryViewPage"
 
-const CAT_CategoryListPage = () => {
+const EXP_CategoryListPage = () => {
     const {
         modal: {
             formView,
@@ -31,7 +31,7 @@ const CAT_CategoryListPage = () => {
         selectedRowId
     } = useListView()
 
-    const { postModel, handlePagination, handleSorting } = useCAT_CategoryStore()
+    const { postModel, handlePagination, handleSorting } = useEXP_CategoryStore()
 
     const { handleSuccess, handleError } = useApiErrorHandler({
         namespace: "Expense Category",
@@ -40,7 +40,7 @@ const CAT_CategoryListPage = () => {
 
     const { data, totalRecords, isLoading } = useSelectPageQuery(postModel, true)
 
-    const deleteMutation = useDeleteCAT_Category(handleSuccess, handleError)
+    const deleteMutation = useDeleteEXP_Category(handleSuccess, handleError)
 
     const [confirmOpen, setConfirmOpen] = React.useState(false)
     const [deleteId, setDeleteId] = React.useState<EntityId | null>(null)
@@ -63,7 +63,7 @@ const CAT_CategoryListPage = () => {
         }
     }
 
-    const columns = useMemo<ColumnDef<CAT_CategorySelectPageResponse>[]>(() => [
+    const columns = useMemo<ColumnDef<EXP_CategorySelectPageResponse>[]>(() => [
         {
             accessorKey: "CategoryName",
             header: "Category Name",
@@ -136,19 +136,19 @@ const CAT_CategoryListPage = () => {
                 onInsert={showAddView}
             />
 
-            <CAT_CategoryAddEditPage
+            <EXP_CategoryAddEditPage
                 showModal={formView}
                 selectedRow={selectedRowId}
                 onClose={closeAddEditView}
             />
 
-            <CAT_CategoryViewPage
+            <EXP_CategoryViewPage
                 showModal={detailView}
                 selectedRow={selectedRowId}
                 onClose={closeDetailView}
             />
 
-            <CAT_CategoryFilterView
+            <EXP_CategoryFilterView
                 openFilter={openFilter}
                 setOpenFilter={setOpenFilter}
             />
@@ -166,4 +166,4 @@ const CAT_CategoryListPage = () => {
     )
 }
 
-export default CAT_CategoryListPage;
+export default EXP_CategoryListPage;

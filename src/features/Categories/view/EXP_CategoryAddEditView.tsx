@@ -3,14 +3,14 @@ import { useApiErrorHandler } from "@/features/auth/hooks/useApiErrorHandler";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
-import { useCreateCAT_Category, useUpdateCAT_Category } from "../api/CAT_CategoryMutation";
-import { CAT_CategoryAddEditRequest } from "../types";
+import { useCreateEXP_Category, useUpdateEXP_Category } from "../api/EXP_CategoryMutation";
+import { EXP_CategoryAddEditRequest } from "../types";
 
-export const CAT_CategoryAddEditView = forwardRef<DataModalButtons, DataModalComponentProps<CAT_CategoryAddEditRequest>>((props, ref) => {
+export const EXP_CategoryAddEditView = forwardRef<DataModalButtons, DataModalComponentProps<EXP_CategoryAddEditRequest>>((props, ref) => {
     const { data, isEditing, onClose, onLoading } = props;
 
-    const { control, handleSubmit, reset, setError, formState: { isSubmitting } } = useForm<CAT_CategoryAddEditRequest>({
-        resolver: zodResolver(CAT_CategoryAddEditRequest),
+    const { control, handleSubmit, reset, setError, formState: { isSubmitting } } = useForm<EXP_CategoryAddEditRequest>({
+        resolver: zodResolver(EXP_CategoryAddEditRequest),
         defaultValues: data
     });
 
@@ -23,8 +23,8 @@ export const CAT_CategoryAddEditView = forwardRef<DataModalButtons, DataModalCom
         },
     });
 
-    const createMutation = useCreateCAT_Category(handleSuccess, handleError);
-    const updateMutation = useUpdateCAT_Category(handleSuccess, handleError);
+    const createMutation = useCreateEXP_Category(handleSuccess, handleError);
+    const updateMutation = useUpdateEXP_Category(handleSuccess, handleError);
 
     const mutation = isEditing ? updateMutation : createMutation;
 

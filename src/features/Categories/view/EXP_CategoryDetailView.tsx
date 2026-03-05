@@ -1,8 +1,8 @@
 import { LabelText, SectionBox, type DataModalButtons, type DataModalComponentProps } from "@/components/shared";
 import { forwardRef } from "react";
-import type { CAT_CategorySelectViewResponse } from "../types";
+import type { EXP_CategorySelectViewResponse } from "../types";
 
-export const CAT_CategoryDetailView = forwardRef<DataModalButtons, DataModalComponentProps<CAT_CategorySelectViewResponse>>(({ data }, _ref) => {
+export const EXP_CategoryDetailView = forwardRef<DataModalButtons, DataModalComponentProps<EXP_CategorySelectViewResponse>>(({ data }, _ref) => {
     return (
         <div className="space-y-6">
             <SectionBox title="Category Information">
