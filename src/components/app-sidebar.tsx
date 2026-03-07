@@ -52,12 +52,17 @@ export const data = {
       ],
     },
     {
+      title: "Approval Inbox",
+      url: "/ApprovalInbox",
+      icon: CheckSquare,
+    },
+    {
       title: "My Expenses",
       url: "/MyExpenses",
       icon: Receipt,
     },
     {
-      title: "Category",
+      title: "Categories",
       url: "/Categories",
       icon: LayoutGrid,
     },
@@ -69,17 +74,6 @@ export const data = {
         { title: "My Team Reports", url: "#" },
         { title: "Submitted Reports", url: "#" },
         { title: "Approved Reports", url: "#" },
-      ],
-    },
-    {
-      title: "Approvals",
-      url: "/Approvals/ApprovalInbox",
-      icon: CheckSquare,
-      items: [
-        { title: "Approval Inbox", url: "/Approvals/ApprovalInbox" },
-        { title: "Approval History", url: "#" },
-        { title: "Delegate Approver", url: "#" },
-        { title: "Escalated Approvals", url: "#" },
       ],
     },
     {

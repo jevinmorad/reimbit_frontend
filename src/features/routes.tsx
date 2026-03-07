@@ -46,11 +46,10 @@ export const moduleRoutes: RouteObject[] = [
         ],
       },
       {
-        path: 'Approvals',
+        path: 'ApprovalInbox',
         element: <SuspenseOutlet />,
         children: [
           {
-            path: 'ApprovalInbox',
             element: <ApprovalInboxListPage />,
             index: true
           }
