@@ -16,6 +16,7 @@ import MainLayout from '@/layouts/main-layout';
 
 const EXP_ExpenseListPage = lazy(() => import('./MyExpenses/pages/EXP_ExpenseListPage'));
 const EXP_CategoryListPage = lazy(() => import('./Categories/pages/EXP_CategoryListPage'));
+const ApprovalInboxListPage = lazy(() => import('./Approvals/pages/ApprovalInboxListPage'));
 
 export const moduleRoutes: RouteObject[] = [
   {
@@ -42,6 +43,17 @@ export const moduleRoutes: RouteObject[] = [
         element: <SuspenseOutlet />,
         children: [
           { element: <EXP_CategoryListPage />, index: true }
+        ],
+      },
+      {
+        path: 'Approvals',
+        element: <SuspenseOutlet />,
+        children: [
+          {
+            path: 'ApprovalInbox',
+            element: <ApprovalInboxListPage />,
+            index: true
+          }
         ],
       },
       {

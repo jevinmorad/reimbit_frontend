@@ -4,7 +4,7 @@ import { getGridClasses, type GridProps } from "./GridUtils";
 
 interface LabelTextProps {
     label: string;
-    value?: string | number | null;
+    value?: React.ReactNode;
     className?: string;
     gridProps?: GridProps;
     layout?: "horizontal" | "vertical";

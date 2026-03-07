@@ -73,10 +73,10 @@ export const data = {
     },
     {
       title: "Approvals",
-      url: "#",
+      url: "/Approvals/ApprovalInbox",
       icon: CheckSquare,
       items: [
-        { title: "Approval Inbox", url: "#" },
+        { title: "Approval Inbox", url: "/Approvals/ApprovalInbox" },
         { title: "Approval History", url: "#" },
         { title: "Delegate Approver", url: "#" },
         { title: "Escalated Approvals", url: "#" },
