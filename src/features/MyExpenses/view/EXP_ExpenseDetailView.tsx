@@ -47,14 +47,14 @@ export const EXP_ExpenseDetailView = forwardRef<DataModalButtons, DataModalCompo
                 />
             </SectionBox>
 
-            {data?.AttachmentUrl && (
+            {data?.ReceiptUrl && (
                 <SectionBox title="Attachments">
                     <div className="col-span-12">
                         <LabelText
                             label="File Link"
                             value={
                                 <a
-                                    href={data.AttachmentUrl}
+                                    href={data.ReceiptUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-primary hover:underline flex items-center gap-1"

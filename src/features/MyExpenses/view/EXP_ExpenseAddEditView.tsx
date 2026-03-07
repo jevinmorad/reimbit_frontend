@@ -85,6 +85,14 @@ export const EXP_ExpenseAddEditView = forwardRef<DataModalButtons, DataModalComp
                 options={categories?.data ?? []}
                 gridProps={{ size: { xs: 12, sm: 6, md: 6, lg: 6, xl: 6 } }}
             />
+
+            <Field.Image
+                control={control}
+                name="ReceiptUrl"
+                label="ReceiptUrl"
+                placeholder="Upload Receipt"
+                gridProps={{ size: { xs: 12, sm: 12, md: 12, lg: 12, xl: 12 } }}
+            />
         </div>
     );
 });

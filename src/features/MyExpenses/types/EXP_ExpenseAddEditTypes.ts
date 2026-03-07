@@ -7,6 +7,7 @@ export const EXP_ExpenseAddEditRequest = z.object({
     CategoryId: z.string("Category is required"),
     Amount: z.number("Amount is required"),
     Currency: z.string("Currency is required"),
+    ReceiptUrl: z.string().nullish(),
 })
 
 export type EXP_ExpenseAddEditRequest = z.infer<typeof EXP_ExpenseAddEditRequest>

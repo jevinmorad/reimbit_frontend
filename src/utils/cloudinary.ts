@@ -1,5 +1,5 @@
-const CLOUDINARY_UPLOAD_URL = "https://api.cloudinary.com/v1_1/dtzmeoxdz/image/upload";
-const CLOUDINARY_UPLOAD_PRESET = "reimbit_unsigned";
+const CLOUDINARY_UPLOAD_URL = import.meta.env.VITE_CLOUDINARY_UPLOAD_URL as string;
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET as string;
 
 export interface CloudinaryUploadResponse {
     secure_url: string;

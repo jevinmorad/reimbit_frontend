@@ -3,7 +3,7 @@ export type EXP_ExpenseSelectViewResponse = {
     Amount: number;
     Currency: string;
     Description: string | null;
-    AttachmentUrl: string | null;
+    ReceiptUrl: string | null;
     ExpenseStatus: string;
     RejectionReason: string | null;
     CategoryName: string;
