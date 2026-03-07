@@ -1,7 +1,7 @@
-import { type RouteObject } from "react-router";
-import EXP_CategoryListPage from "../pages/EXP_CategoryListPage";
+import { type RouteObject } from "react-router-dom";
+import CategoryListPage from "../pages/CategoryListPage";
 
-export const EXP_CategoryRoutes: RouteObject = {
+export const CategoryRoutes: RouteObject = {
     path: 'Categories',
-    children: [{ element: <EXP_CategoryListPage />, index: true }],
+    children: [{ element: <CategoryListPage />, index: true }],
 };

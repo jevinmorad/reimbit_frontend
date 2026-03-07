@@ -14,9 +14,11 @@ function SuspenseOutlet() {
 
 import MainLayout from '@/layouts/main-layout';
 
-const EXP_ExpenseListPage = lazy(() => import('./MyExpenses/pages/EXP_ExpenseListPage'));
-const EXP_CategoryListPage = lazy(() => import('./Categories/pages/EXP_CategoryListPage'));
+const ExpenseListPage = lazy(() => import('./MyExpenses/pages/ExpenseListPage'));
+const CategoryListPage = lazy(() => import('./Categories/pages/CategoryListPage'));
 const ApprovalInboxListPage = lazy(() => import('./Approvals/pages/ApprovalInboxListPage'));
+const EmployeeListPage = lazy(() => import('./Employees/pages/EmployeeListPage'));
+const EmployeeAddEditPage = lazy(() => import('./Employees/pages/EmployeeAddEditPage'));
 
 export const moduleRoutes: RouteObject[] = [
   {
@@ -35,14 +37,14 @@ export const moduleRoutes: RouteObject[] = [
         path: 'MyExpenses',
         element: <SuspenseOutlet />,
         children: [
-          { element: <EXP_ExpenseListPage />, index: true }
+          { element: <ExpenseListPage />, index: true }
         ],
       },
       {
         path: 'Categories',
         element: <SuspenseOutlet />,
         children: [
-          { element: <EXP_CategoryListPage />, index: true }
+          { element: <CategoryListPage />, index: true }
         ],
       },
       {
@@ -63,6 +65,20 @@ export const moduleRoutes: RouteObject[] = [
             index: true,
             element: <div>Dashboard Home</div>,
           },
+        ],
+      },
+      {
+        path: 'Employees',
+        element: <SuspenseOutlet />,
+        children: [
+          {
+            index: true,
+            element: <EmployeeListPage />,
+          },
+          {
+            path: 'add',
+            element: <EmployeeAddEditPage />,
+          }
         ],
       },
     ],

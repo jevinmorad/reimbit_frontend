@@ -25,8 +25,8 @@ export const ApprovalInboxDetailView = forwardRef<DataModalButtons, DataModalCom
     const handleAccept = async () => {
         if (!data?.ExpenseId) return;
         await updateStatusMutation.mutateAsync({
-            expenseId: data.ExpenseId,
-            status: ExpenseStatus.UnderApproval,
+            ExpenseId: data.ExpenseId,
+            Status: ExpenseStatus.UnderApproval,
         });
     };
 
@@ -38,9 +38,9 @@ export const ApprovalInboxDetailView = forwardRef<DataModalButtons, DataModalCom
         if (!data?.ExpenseId || !rejectionReason.trim()) return;
 
         await updateStatusMutation.mutateAsync({
-            expenseId: data.ExpenseId,
-            status: ExpenseStatus.Rejected,
-            reason: rejectionReason,
+            ExpenseId: data.ExpenseId,
+            Status: ExpenseStatus.Rejected,
+            Reason: rejectionReason,
         });
     };
 

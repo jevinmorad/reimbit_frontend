@@ -18,9 +18,9 @@ export type ApprovalInboxListResponse = {
 };
 
 export const UpdateExpenseStatusRequest = z.object({
-    expenseId: z.custom<EntityId>(),
-    status: z.number(),
-    reason: z.string().optional(),
+    ExpenseId: z.custom<EntityId>(),
+    Status: z.number(),
+    Reason: z.string().optional(),
 });
 
 export type UpdateExpenseStatusRequest = z.infer<typeof UpdateExpenseStatusRequest>;

@@ -9,7 +9,7 @@ export function DashboardContent({ children, className, ...props }: DashboardCon
     return (
         <div
             className={cn(
-                "flex h-full flex-1 flex-col space-y-4 md:space-y-8 p-0 md:p-4 min-h-0 overflow-hidden",
+                "flex h-full flex-1 flex-col space-y-4 md:space-y-8 p-0 md:p-4 min-h-0 overflow-auto",
                 className
             )}
             {...props}

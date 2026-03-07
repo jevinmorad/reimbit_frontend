@@ -1,7 +1,7 @@
-import { type RouteObject } from "react-router";
-import EXP_ExpenseListPage from "../pages/EXP_ExpenseListPage";
+import { type RouteObject } from "react-router-dom";
+import ExpenseListPage from "../pages/ExpenseListPage";
 
-export const EXP_ExpenseRoutes: RouteObject = {
+export const ExpenseRoutes: RouteObject = {
     path: 'MyExpenses',
-    children: [{ element: <EXP_ExpenseListPage />, index: true }],
+    children: [{ element: <ExpenseListPage />, index: true }],
 };

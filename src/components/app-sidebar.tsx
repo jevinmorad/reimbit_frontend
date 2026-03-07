@@ -115,14 +115,12 @@ export const data = {
     },
     {
       title: "Org & User Mgmt",
-      url: "#",
+      url: "/Employees",
       icon: Users,
       items: [
-        { title: "Org Profile", url: "#" },
-        { title: "User List", url: "#" },
+        { title: "User List", url: "/Employees" },
         { title: "Create/Edit User", url: "#" },
         { title: "Manager Mapping", url: "#" },
-        { title: "Department Setup", url: "#" },
       ],
     },
     {
